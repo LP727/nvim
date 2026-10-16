@@ -194,5 +194,13 @@ return {
 			end,
 			desc = "C[a]lls Outgoing",
 		},
+		-- others
+		{
+			"<leader>n",
+			function()
+				Snacks.notifier.show_history()
+			end,
+			desc = "Notification History",
+		},
 	},
 }

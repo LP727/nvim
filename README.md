@@ -64,6 +64,7 @@ ln -sf ~/.local/LLVM-23.1.3-Linux-X64/bin/clang-format ~/.local/bin/
 ln -sf ~/.local/LLVM-23.1.3-Linux-X64/bin/clangd ~/.local/bin/
 ln -sf ~/.local/LLVM-23.1.3-Linux-X64/bin/clang ~/.local/bin/
 ln -sf ~/.local/LLVM-23.1.3-Linux-X64/bin/clang++ ~/.local/bin/
+ln -sf ~/.local/LLVM-23.1.3-Linux-X64/bin/lldb-dap ~/.local/bin/
 ```
 
 
