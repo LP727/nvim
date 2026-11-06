@@ -5,6 +5,8 @@ vim.opt.expandtab = true
 vim.opt.number = true
 vim.env.CC = "clang"
 
-vim.lsp.inlay_hint.enable(true)
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args) vim.lsp.inlay_hint.enable(true, { bufnr = args.buf }) end,
+})
 
 require("config.lazy")
