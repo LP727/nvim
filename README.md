@@ -24,6 +24,12 @@ cd ~/.config
 git clone git@github.com:LP727/nvim.git
 ```
 
+### Install the apt packages
+The following dependencies can be installed from an apt install command: 
+```bash
+sudo apt install git xclip unzip npm python3-venv
+```
+
 ### Install Neovim
 1. Download the latest Neovim version from: https://github.com/neovim/neovim/releases
 
@@ -34,8 +40,8 @@ curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x8
 
 2. Extract the binaries into your .local using:
 ```bash
-tar -xf nvim-linux-x86_64.tar.gz -C ~/.local/
-mv ~/.local/nvim-linux-x86_64 ~/.local/nvim
+rm -rf ~/.local/nvim && mkdir -p ~/.local/nvim
+tar -xf nvim-linux-x86_64.tar.gz -C ~/.local/nvim --strip-components=1
 ```
 
 3. Create symlink to the binary (to launch from nvim in shell)
@@ -45,38 +51,30 @@ ln -sf ~/.local/nvim/bin/nvim ~/.local/bin/
 
 ### Update Neovim
 
-To update your neovim version, remove your existing install and reperform the install steps above.
+To update your neovim version, run the [Install Neovim](#install-neovim) steps.
 
-```bash
-rm -rf ~/.local/nvim
-curl -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz | tar -xz -C ~/.local
-mv ~/.local/nvim-linux-x86_64 ~/.local/nvim
-```
-
-### Install LLVM (clang, clang-format)
+### Install LLVM 
+Installs: clang, clang++, clang-format and clangd
 1. Download the latest release of LLVM:
 ```bash
-curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.3/LLVM-23.1.3-Linux-X64.tar.xz
+# figure out the latest version
+ver=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/llvm/llvm-project/releases/latest | sed 's|.*/llvmorg-||')
+echo "$ver"   # sanity check, should print something like 23.1.3
+curl -LO "https://github.com/llvm/llvm-project/releases/download/llvmorg-$ver/LLVM-$ver-Linux-X64.tar.xz"
 ```
 2. Extract under "~/.local"
 ```bash
-tar -xf LLVM-23.1.3-Linux-X64.tar.xz -C ~/.local/
+rm -rf /.local/llvm && mkdir -p ~/.local/llvm
+tar -xf "LLVM-$ver-Linux-X64.tar.xz" -C ~/.local/llvm --strip-components=1
 ```
 3.  Create symlink between the binary and PATH
 ```bash
-ln -sf ~/.local/LLVM-23.1.3-Linux-X64/bin/clang-format ~/.local/bin/
-ln -sf ~/.local/LLVM-23.1.3-Linux-X64/bin/clangd ~/.local/bin/
-ln -sf ~/.local/LLVM-23.1.3-Linux-X64/bin/clang ~/.local/bin/
-ln -sf ~/.local/LLVM-23.1.3-Linux-X64/bin/clang++ ~/.local/bin/
+for t in clang clang++ clang-format clangd; do ln -sf ~/.local/llvm/bin/$t ~/.local/bin/; done
 ```
 
-### Update LLVM 
-```bash
-curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-NEW/LLVM-NEW-Linux-X64.tar.xz
-tar -xf LLVM-NEW-Linux-X64.tar.xz -C ~/.local/
-for t in clang clang++ clang-format clangd; do ln -sf ~/.local/LLVM-NEW-Linux-X64/bin/$t ~/.local/bin/; done
-rm -rf ~/.local/LLVM-OLD-Linux-X64
-```
+### Update LLVM
+
+To update LLVM, run the [Install LLVM](#install-llvm) steps.
 
 ### Install Rust
 1. Install rust from the rustup provider
