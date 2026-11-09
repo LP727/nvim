@@ -130,3 +130,21 @@ Inside Neovim
 :TSUpdate
 ```
 Commit "lazy-lock.json" after performing ":Lazy update"
+
+### Debug configs per project (Rust)
+
+To enable a debug config in a rust project, create a `.nvim.lua` in the project root (next to `Cargo.toml`):
+
+```lua
+local dap = require("dap")
+dap.configurations.rust = dap.configurations.rust or {}
+table.insert(dap.configurations.rust, {
+	name = "Debug (my project)",
+	type = "codelldb",
+	request = "launch",
+	program = require("utils.cargo_dap").program, -- see lua/utils/cargo_dap.lua, included in lua/pluggins/dap.lua
+	cwd = "${workspaceFolder}",
+	terminal = "external", -- see dap.lua for config
+	env = { RUST_LOG = "debug" },
+})
+```

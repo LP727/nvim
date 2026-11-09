@@ -5,6 +5,8 @@ vim.opt.expandtab = true
 vim.opt.number = true
 vim.env.CC = "clang"
 
+vim.g.rustaceanvim = { dap = { autoload_configurations = false } }
+
 -- to silence the pynvim warnings in checkhealth
 vim.g.loaded_python3_provider = 0
 
@@ -12,5 +14,8 @@ vim.g.loaded_python3_provider = 0
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args) vim.lsp.inlay_hint.enable(true, { bufnr = args.buf }) end,
 })
+
+-- to read local project launch for debug
+vim.o.exrc = true
 
 require("config.lazy")
