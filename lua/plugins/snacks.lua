@@ -55,5 +55,6 @@ return {
 		{ "gao", function() Snacks.picker.lsp_outgoing_calls() end, desc = "C[a]lls Outgoing" },
 		-- others
 		{ "<leader>n", function() Snacks.notifier.show_history() end, desc = "Notification History" },
+		{ "<leader>rr", function() vim.cmd.RustLsp("run") end, desc = "Rust run", ft = "rust" },
 	},
 }
