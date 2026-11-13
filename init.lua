@@ -5,7 +5,17 @@ vim.opt.expandtab = true
 vim.opt.number = true
 vim.env.CC = "clang"
 
-vim.g.rustaceanvim = { dap = { autoload_configurations = false } }
+-- to make rust-analyzer work on new files
+-- this uses cpu, 1 watch is about 1 KB of ram, 1 watcher per directory, watchers are spawned by rust-analyzer upon opening a rust file.
+-- The watches cover the Cargo project that the .rs file is part of. So the watcher server setting CAN increase CPU usage.
+vim.g.rustaceanvim = {
+	dap = { autoload_configurations = false },
+	server = {
+		default_settings = {
+			["rust-analyzer"] = { files = { watcher = "server" } },
+		},
+	},
+}
 
 -- to silence the pynvim warnings in checkhealth
 vim.g.loaded_python3_provider = 0
