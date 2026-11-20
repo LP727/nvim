@@ -64,7 +64,7 @@ curl -LO "https://github.com/llvm/llvm-project/releases/download/llvmorg-$ver/LL
 ```
 2. Extract under "~/.local"
 ```bash
-rm -rf /.local/llvm && mkdir -p ~/.local/llvm
+rm -rf ~/.local/llvm && mkdir -p ~/.local/llvm
 tar -xf "LLVM-$ver-Linux-X64.tar.xz" -C ~/.local/llvm --strip-components=1
 ```
 3.  Create symlink between the binary and PATH
@@ -108,6 +108,38 @@ To update Rust, simply run:
 ```bash
 rustup update
 ```
+
+### Install Nerdfont "Plemo1JP Console NF"
+Nerfont allows DAP ui to have proper icons, plus this specific one has kanji support
+
+1. Install latest Nerfont for PlemolJP (copying Takuya Matsuyama)
+```bash
+ver=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/yuru7/PlemolJP/releases/latest | sed 's|.*/||')
+echo $ver # sanity check, expect v3.1.0 or higher
+rm -rf ~/.local/share/fonts/plemoljp && mkdir -p ~/.local/share/fonts/plemoljp
+curl -fL -o /tmp/plemoljp_nf.zip \
+  "https://github.com/yuru7/PlemolJP/releases/download/$ver/PlemolJP_NF_$ver.zip"
+unzip -j -o /tmp/plemoljp_nf.zip "*.ttf" -d ~/.local/share/fonts/plemoljp
+rm /tmp/plemoljp_nf.zip
+fc-cache -f
+fc-list | grep "PlemolJP Console NF"
+```
+
+2. Install programing symbols
+```bash
+set -e
+tmp=$(mktemp -d)
+curl -fL -o "$tmp/symbols.tar.xz" \
+  https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz
+rm -rf ~/.local/share/fonts/nerdsymbols && mkdir -p ~/.local/share/fonts/nerdsymbols
+tar -xJf "$tmp/symbols.tar.xz" -C ~/.local/share/fonts/nerdsymbols
+rm -rf "$tmp"
+fc-cache -f
+fc-list | grep "Symbols Nerd Font Mono"
+```
+
+3. Updating
+Update can be performed by following the install scripts from step 1 & 2
 
 ### First Launch
 - Run ":Lazy restore" to restore the lazy-lock.json inside Neovim.

@@ -29,3 +29,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.o.exrc = true
 
 require("config.lazy")
+require("config.tabline").setup()

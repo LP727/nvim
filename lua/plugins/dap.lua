@@ -34,25 +34,25 @@ return {
 			stopOnEntry = false,
 			terminal = "external",
 		})
-
+		dapui.setup()
 		-- Plain-Unicode icons so no Nerd Font is needed
 		-- TODO: Setup NerFont and add in README
-		dapui.setup({
-			icons = { expanded = "v", collapsed = ">", current_frame = ">" },
-			controls = {
-				icons = {
-					pause = "||",
-					play = "▶",
-					step_into = "↓",
-					step_over = "→",
-					step_out = "↑",
-					step_back = "←",
-					run_last = "↻",
-					terminate = "■",
-					disconnect = "⏏",
-				},
-			},
-		})
+		-- dapui.setup({
+		-- 	icons = { expanded = "v", collapsed = ">", current_frame = ">" },
+		-- 	controls = {
+		-- 		icons = {
+		-- 			pause = "||",
+		-- 			play = "▶",
+		-- 			step_into = "↓",
+		-- 			step_over = "→",
+		-- 			step_out = "↑",
+		-- 			step_back = "←",
+		-- 			run_last = "↻",
+		-- 			terminate = "■",
+		-- 			disconnect = "⏏",
+		-- 		},
+		-- 	},
+		-- })
 
 		vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError" })
 		vim.fn.sign_define("DapStopped", { text = "▶", texthl = "DiagnosticOk" })
