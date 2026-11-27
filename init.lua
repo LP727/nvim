@@ -17,6 +17,16 @@ vim.g.rustaceanvim = {
 	},
 }
 
+-- to find the .nvim.lua on a dir change and enable debugging
+vim.api.nvim_create_autocmd("DirChanged", {
+	callback = function()
+		local code = vim.secure.read(vim.fn.getcwd() .. "/.nvim.lua")
+		if code then
+			assert(loadstring(code))()
+		end
+	end,
+})
+
 -- to silence the pynvim warnings in checkhealth
 vim.g.loaded_python3_provider = 0
 

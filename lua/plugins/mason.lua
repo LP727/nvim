@@ -9,6 +9,7 @@ return {
 		opts = {
 			ensure_installed = {
 				"codelldb",
+				"cortex-debug",
 				"stylua",
 				"taplo",
 				"shfmt",
